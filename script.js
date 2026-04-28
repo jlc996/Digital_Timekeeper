@@ -50,7 +50,7 @@ let clockApp = {
             "<span class='separator'>:</span>" +
             m +
             "<span class='separator'>:</span>" +
-            s + "<span class='separator'></span>"
+            s + "<span class='separator'></span>" +
             suffix;
     },
 
