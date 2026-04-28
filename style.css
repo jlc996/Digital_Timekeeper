@@ -78,7 +78,7 @@ main {
     /* Prevents digit jitter */
     font-variant-numeric: tabular-nums;
     
-    /* Prevents hanging end digit */
+    /* Center clock in display */
     display: flex;
     justify-content: center;
     align-items: center;
@@ -86,6 +86,11 @@ main {
     /* Layout control */
     width: min(95vw, 900px);
     padding: 12px 20px;
+
+    /* Attempt to fix hanging end digit */
+    overflow: hidden;
+    overflow-clip-margin: content-box;
+    min-width: 0;
 
     /* Neon glow effect */
     text-shadow:
