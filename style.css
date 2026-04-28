@@ -77,7 +77,11 @@ main {
 
     /* Prevents digit jitter */
     font-variant-numeric: tabular-nums;
-    display: inline-block;
+    
+    /* Prevents hanging end digit */
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
     /* Layout control */
     width: min(95vw, 900px);
@@ -179,6 +183,7 @@ footer {
     .clock {
         font-size: clamp(2.5rem, 12vw, 6rem);
         width: 95vw;
+
     }
 
     button {
