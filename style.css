@@ -1,6 +1,7 @@
 /* =========================================
    1. GLOBAL RESET
-   Removes default browser spacing issues
+   Removes default browser spacing and ensures
+   consistent sizing across all elements
 ========================================= */
 
 * {
@@ -12,7 +13,10 @@
 
 /* =========================================
    2. BODY + THEME BASE STYLES
-   Handles layout + light/dark backgrounds
+   Sets full-page layout and background theme system
+   - Flex column keeps footer at bottom
+   - Background images define light/dark modes
+   - Smooth transitions prevent harsh theme changes
 ========================================= */
 
 body {
@@ -20,7 +24,7 @@ body {
     flex-direction: column;
     min-height: 100vh;
 
-    /* Light theme default background */
+    /* Light theme background (default) */
     background-image: url(https://cdn.pixabay.com/photo/2016/07/16/23/28/earth-1522934_1280.jpg);
     background-size: cover;
     background-position: center;
@@ -37,7 +41,7 @@ body {
 }
 
 
-/* Dark mode override */
+/* Dark mode override (toggles via JS class) */
 body.dark-theme {
     background-image: url(https://cdn.pixabay.com/photo/2016/10/20/18/35/earth-1756274_1280.jpg);
     background-color: #1a1a1a;
@@ -46,7 +50,8 @@ body.dark-theme {
 
 /* =========================================
    3. MAIN LAYOUT CONTAINER
-   Centers clock + buttons vertically
+   Centers content (clock + buttons) vertically
+   and horizontally using flexbox
 ========================================= */
 
 main {
@@ -64,55 +69,70 @@ main {
 /* =========================================
    4. CLOCK DISPLAY
    Main digital clock styling
+   - Uses monospace font for alignment stability
+   - clamp() makes it responsive
+   - text-shadow creates neon/glow effect
 ========================================= */
 
 .clock {
     font-family: "Source Code Pro", monospace;
 
-    /* Responsive scaling */
-    font-size: clamp(4rem, 15vw, 12rem);
+    /* Responsive scaling based on viewport width */
+    font-size: clamp(3rem, 12vw, 10rem);
+    line-height: 1;
 
-    line-height: 1.1;
+    /* Keeps numbers evenly spaced (important for clocks) */
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+
     text-align: center;
 
-    /* Prevents digit jitter */
-    font-variant-numeric: tabular-nums;
-    
-    /* Center clock in display */
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    /* Inline-block keeps it sized to content */
+    display: inline-block;
 
-    /* Layout control */
-    width: min(95vw, 900px);
-    padding: 12px 20px;
-
-    /* Attempt to fix hanging end digit */
-    overflow: hidden;
-    overflow-clip-margin: content-box;
-    min-width: 0;
-
-    /* Neon glow effect */
+    /* Neon glow styling */
     text-shadow:
         0 0 5px rgba(255, 255, 255, 0.8),
         0 0 10px rgba(0, 255, 255, 0.7),
         0 0 20px rgba(0, 150, 255, 0.6),
         0 0 35px rgba(140, 0, 255, 0.5),
         0 0 50px rgba(255, 0, 180, 0.4);
-
-    /* Glassmorphism background */
-    background: rgba(255, 255, 255, 0.08);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    border-radius: 10px;
-
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
 }
 
 
 /* =========================================
-   5. BLINKING SEPARATOR (COLONS)
-   Handles animated ":" effect
+   CLOCK CONTAINER (GLASS EFFECT WRAPPER)
+   This is the "glass box" around the clock
+   - Handles layout centering
+   - Provides glassmorphism styling
+   - Prevents overflow issues visually
+========================================= */
+
+.clock-container {
+
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+
+    width: 100%;
+
+    padding: 12px 30px;
+    border-radius: 10px;
+
+    /* Glass effect */
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+
+    overflow: visible; /* allows glow to extend outside box */
+}
+
+
+/* =========================================
+   5. BLINKING COLON EFFECT
+   Used for separating time (12:45:01)
 ========================================= */
 
 @keyframes blink {
@@ -128,7 +148,7 @@ main {
 
 /* =========================================
    6. BUTTON CONTAINER
-   Layout for toggle buttons
+   Holds toggle buttons in a horizontal row
 ========================================= */
 
 .button-container {
@@ -139,7 +159,10 @@ main {
 
 /* =========================================
    7. BUTTON STYLING
-   Glass-style interactive buttons
+   Glass-style interactive UI buttons
+   - Soft blur effect
+   - Glow shadow for depth
+   - Smooth hover transitions
 ========================================= */
 
 button {
@@ -167,6 +190,7 @@ button {
 
 /* =========================================
    8. FOOTER STYLING
+   Simple centered footer with subtle opacity
 ========================================= */
 
 footer {
@@ -179,16 +203,23 @@ footer {
 
 
 /* =========================================
-   9. MOBILE RESPONSIVE (PLACEHOLDER)
-   Add overrides for small screens here
+   9. MOBILE RESPONSIVE STYLES
+   Adjusts layout for smaller screens
+   - Reduces clock size to prevent overflow
+   - Shrinks buttons for better spacing
 ========================================= */
 
 @media (max-width: 600px) {
 
     .clock {
-        font-size: clamp(2.5rem, 12vw, 6rem);
-        width: 95vw;
+        font-size: 28px;
+        white-space: nowrap;
+        overflow: visible;
+    }
 
+    .clock-container {
+        padding: 10px 16px;
+        overflow: visible;
     }
 
     button {
