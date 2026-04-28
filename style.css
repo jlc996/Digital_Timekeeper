@@ -1,32 +1,53 @@
+/* =========================================
+   1. GLOBAL RESET
+   Removes default browser spacing issues
+========================================= */
+
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
+
+/* =========================================
+   2. BODY + THEME BASE STYLES
+   Handles layout + light/dark backgrounds
+========================================= */
+
 body {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
 
-    /* Default Light Theme */
+    /* Light theme default background */
     background-image: url(https://cdn.pixabay.com/photo/2016/07/16/23/28/earth-1522934_1280.jpg);
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
+
     background-color: white;
     color: #333;
 
-    transition: background-image 0.3s ease,
+    /* Smooth transitions when switching themes */
+    transition:
+        background-image 0.3s ease,
         background-color 0.3s ease,
         color 0.3s ease;
 }
 
-/* Dark Mode Styles */
+
+/* Dark mode override */
 body.dark-theme {
     background-image: url(https://cdn.pixabay.com/photo/2016/10/20/18/35/earth-1756274_1280.jpg);
     background-color: #1a1a1a;
 }
+
+
+/* =========================================
+   3. MAIN LAYOUT CONTAINER
+   Centers clock + buttons vertically
+========================================= */
 
 main {
     flex: 1;
@@ -39,11 +60,30 @@ main {
     gap: 20px;
 }
 
+
+/* =========================================
+   4. CLOCK DISPLAY
+   Main digital clock styling
+========================================= */
+
 .clock {
     font-family: "Source Code Pro", monospace;
+
+    /* Responsive scaling */
     font-size: clamp(4rem, 15vw, 12rem);
+
+    line-height: 1.1;
+    text-align: center;
+
+    /* Prevents digit jitter */
+    font-variant-numeric: tabular-nums;
+    display: inline-block;
+
+    /* Layout control */
+    width: min(95vw, 900px);
     padding: 12px 20px;
 
+    /* Neon glow effect */
     text-shadow:
         0 0 5px rgba(255, 255, 255, 0.8),
         0 0 10px rgba(0, 255, 255, 0.7),
@@ -51,19 +91,47 @@ main {
         0 0 35px rgba(140, 0, 255, 0.5),
         0 0 50px rgba(255, 0, 180, 0.4);
 
+    /* Glassmorphism background */
     background: rgba(255, 255, 255, 0.08);
     border: 1px solid rgba(255, 255, 255, 0.2);
-
     border-radius: 10px;
 
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
 }
 
+
+/* =========================================
+   5. BLINKING SEPARATOR (COLONS)
+   Handles animated ":" effect
+========================================= */
+
+@keyframes blink {
+    50% {
+        opacity: 0;
+    }
+}
+
+.separator {
+    animation: blink 1s step-end infinite;
+}
+
+
+/* =========================================
+   6. BUTTON CONTAINER
+   Layout for toggle buttons
+========================================= */
+
 .button-container {
     display: flex;
     gap: 15px;
 }
+
+
+/* =========================================
+   7. BUTTON STYLING
+   Glass-style interactive buttons
+========================================= */
 
 button {
     padding: 12px 20px;
@@ -87,10 +155,34 @@ button {
     transition: all 0.3s ease;
 }
 
+
+/* =========================================
+   8. FOOTER STYLING
+========================================= */
+
 footer {
     text-align: center;
     padding: 15px;
     font-size: 14px;
     opacity: 0.8;
     text-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+}
+
+
+/* =========================================
+   9. MOBILE RESPONSIVE (PLACEHOLDER)
+   Add overrides for small screens here
+========================================= */
+
+@media (max-width: 600px) {
+
+    .clock {
+        font-size: clamp(2.5rem, 12vw, 6rem);
+        width: 95vw;
+    }
+
+    button {
+        padding: 10px 14px;
+        font-size: 0.9rem;
+    }
 }
