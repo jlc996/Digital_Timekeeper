@@ -217,8 +217,9 @@ footer {
         /* Keep it responsive instead of fixed */
         font-size: clamp(2rem, 10vw, 4rem);
 
-        white-space: nowrap;
-        line-height: 1;
+        white-space: normal;        /* allow new lines */
+        overflow-wrap: anywhere;    /* allow breaking numbers */
+        text-align: center;
     }
 
     .clock-container {
